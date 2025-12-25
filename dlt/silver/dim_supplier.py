@@ -9,9 +9,15 @@ def dim_supplier():
     return (
         dp.read("bronze_sales_suppliers")
           .select(
-              col("supplier_id").cast("string"),
-              col("supplier_name"),
-              col("supplier_type"),
-              col("country")
+              col("supplierID").cast("string").alias("supplier_id"),
+              col("name").alias("supplier_name"),
+              col("ingredient"),
+              col("continent"),
+              col("city"),
+              col("district"),
+              col("size"),
+              col("longitude"),
+              col("latitude"),
+              col("approved").cast("boolean")
           )
     )

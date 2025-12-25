@@ -9,11 +9,15 @@ def dim_franchise():
     return (
         dp.read("bronze_sales_franchises")
           .select(
-              col("franchise_id").cast("string"),
-              col("franchise_name"),
+              col("franchiseID").cast("string").alias("franchise_id"),
+              col("name").alias("franchise_name"),
               col("city"),
-              col("state"),
+              col("district"),
+              col("zipcode"),
               col("country"),
-              col("opened_date").cast("date")
+              col("size"),
+              col("longitude"),
+              col("latitude"),
+              col("supplierID").cast("string").alias("supplier_id")
           )
     )

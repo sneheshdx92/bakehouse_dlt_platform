@@ -3,22 +3,24 @@ from pyspark.sql.functions import col
 
 @dp.table(
     name="bakehouse_dev.silver.silver_fact_sales",
-    comment="Sales fact table at transactionID grain"
+    comment="Sales fact table at transactionID grain (PII removed)"
 )
 @dp.expect_or_fail(
-    "unique_transaction",
+    "transaction_id_not_null",
     "transactionID IS NOT NULL"
 )
 def fact_sales():
     return (
         dp.read("bronze_sales_transactions")
           .select(
-              col("transactionID"),
-              col("customer_id"),
-              col("franchise_id"),
-              col("supplier_id"),
-              col("transaction_timestamp").cast("timestamp"),
+              col("transactionID").cast("string").alias("transaction_id"),
+              col("customerID").cast("string").alias("customer_id"),
+              col("franchiseID").cast("string").alias("franchise_id"),
+              col("dateTime").cast("timestamp").alias("transaction_ts"),
+              col("product"),
               col("quantity").cast("int"),
-              col("unit_price").cast("decimal(10,2)")
+              col("unitPrice").cast("decimal(10,2)"),
+              col("totalPrice").cast("decimal(10,2)"),
+              col("paymentMethod")
           )
     )
