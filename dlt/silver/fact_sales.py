@@ -7,7 +7,7 @@ from pyspark.sql.functions import col
 )
 @dp.expect_or_fail(
     "transaction_id_not_null",
-    "transactionID IS NOT NULL"
+    "transaction_id IS NOT NULL"
 )
 def fact_sales():
     return (
